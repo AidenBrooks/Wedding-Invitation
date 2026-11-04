@@ -21,7 +21,16 @@ function Invitation({ lang, setLang, opened }) {
   const [revealed, setRevealed] = React.useState(false);
   const [locked, setLocked] = React.useState(true);
   React.useEffect(() => { if (!opened) return; const id = setTimeout(() => setLocked(false), UNLOCK_MS); return () => clearTimeout(id); }, [opened]);
+  /* Scratching the heart also opens the calendar prompt — once, on the finger-lift that finished the reveal
+     (browsers only allow this straight after a tap). A short pause lets the date and sparkles show first. */
+  const calPending = React.useRef(false), calDone = React.useRef(false);
+  const afterScratch = () => {
+    if (!calPending.current || calDone.current) return;
+    calPending.current = false; calDone.current = true;
+    setTimeout(saveTheDate, 900);
+  };
   const onReveal = () => {
+    calPending.current = true;
     try { navigator.vibrate && navigator.vibrate([18, 40, 18]); } catch (e) {}
     const h = heartWrap.current.getBoundingClientRect(), s = scratchSec.current.getBoundingClientRect();
     spark.current && spark.current.burst(h.left - s.left + h.width / 2, h.top - s.top + h.height * 0.42);
@@ -61,7 +70,7 @@ function Invitation({ lang, setLang, opened }) {
             </Reveal>
             <Reveal root={sc} delay={60}><GreyHeartRule /></Reveal>
             <Reveal root={sc} delay={120}>
-              <div ref={heartWrap} style={{ display: "flex", justifyContent: "center", animation: revealed ? "nkHeartPop 700ms var(--ease-out)" : "none" }}>
+              <div ref={heartWrap} onPointerUp={afterScratch} onKeyUp={afterScratch} style={{ display: "flex", justifyContent: "center", animation: revealed ? "nkHeartPop 700ms var(--ease-out)" : "none" }}>
                 <ScratchReveal lang={lang} width={286} height={256} foil={SAGE_FOIL} hint={" "} onReveal={onReveal}><HeartDate c={c} ta={ta} shown={revealed} /></ScratchReveal>
               </div>
             </Reveal>

@@ -122,7 +122,7 @@ export function ProgramTimeline({ root, lang, ta, body }) {
     return () => cancelAnimationFrame(raf);
   }, [on]);
   return (
-    <div ref={wrap} style={{ position: "relative", width: "100%", maxWidth: 350, display: "flex", flexDirection: "column", gap: 26, paddingTop: 4 }}>
+    <div ref={wrap} style={{ position: "relative", width: "100%", maxWidth: 350, display: "flex", flexDirection: "column", gap: 38, paddingTop: 4 }}>
       <span aria-hidden="true" style={{ position: "absolute", left: "50%", top: 18, bottom: 18, width: 1, transform: `translateX(-.5px) scaleY(${on ? 1 : 0})`, transformOrigin: "top", background: "linear-gradient(180deg, transparent, var(--border-rule) 10%, var(--text-accent) 50%, var(--border-rule) 90%, transparent)", transition: `transform 2200ms ${EASE} 200ms` }}></span>
       <span ref={bead} aria-hidden="true" style={{ position: "absolute", left: "50%", top: 0, zIndex: 2, width: 7, height: 7, borderRadius: "50%", background: "#c9a75e", boxShadow: "0 0 10px 3px rgba(230,205,148,.9), 0 0 2px 1px #fffaf0", opacity: 0, pointerEvents: "none" }}></span>
       {PROGRAM[lang].items.map(([time, what, icon], i) => {

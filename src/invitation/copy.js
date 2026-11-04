@@ -41,13 +41,30 @@ const VENUE_Q = "Sulthar Habeebullah Mahal, Ponnagoundanur Road, Pallapatti 6392
 export const MAPS_URL = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(VENUE_Q);
 export const MAPS_EMBED = "https://maps.google.com/maps?q=" + encodeURIComponent(VENUE_Q) + "&z=15&output=embed";
 
-/** Download an .ics so guests can add the Nikkah to their calendar. */
+const CAL = {
+  title: "Nikkah of Mohamed Ahnaf & Sulaiha Faslin",
+  start: "20261213T060000Z", end: "20261213T090000Z", // 11:30 AM – 2:30 PM IST
+  location: "Sulthar Habeebullah Mahal, Ponnagoundanur Road, Pallapatti - 639 207",
+  details: "Nikkah at 11:30 AM. With the blessings of Allah, we invite you to share in the joy of our Nikkah.",
+};
+const GOOGLE_CAL = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+  + "&text=" + encodeURIComponent(CAL.title) + "&dates=" + CAL.start + "/" + CAL.end
+  + "&location=" + encodeURIComponent(CAL.location) + "&details=" + encodeURIComponent(CAL.details) + "&ctz=Asia/Kolkata";
+
+/**
+ * Open the guest's calendar with the Nikkah already filled in — they confirm with one tap.
+ * (Browsers never allow a website to write to a calendar silently.)
+ *  - iPhone / iPad: opens public/nikkah.ics → iOS shows its "Add to Calendar" sheet (with 1-day and 2-hour reminders).
+ *  - Android: opens Google Calendar's prefilled "Save event" screen (the app, if installed).
+ *  - Computers: downloads the .ics, which opens in Outlook / Apple Calendar / etc.
+ * Must be called from a tap so the browser allows it.
+ */
 export function saveTheDate() {
-  const ics = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Absze Technology//Nikkah//EN", "BEGIN:VEVENT", "UID:ahnaf-sulaiha-nikkah-20261213",
-    "DTSTAMP:20261103T000000Z", "DTSTART:20261213T060000Z", "DTEND:20261213T090000Z", "SUMMARY:Nikkah of Mohamed Ahnaf & Sulaiha Faslin",
-    "LOCATION:Sulthar Habeebullah Mahal\\, Ponnagoundanur Road\\, Pallapatti - 639 207", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
-  const url = URL.createObjectURL(new Blob([ics], { type: "text/calendar" }));
-  const a = document.createElement("a"); a.href = url; a.download = "ahnaf-sulaiha-nikkah.ics";
+  const ua = navigator.userAgent || "";
+  const ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  const ics = new URL(import.meta.env.BASE_URL + "nikkah.ics", window.location.href).href;
+  if (ios) { window.location.href = ics; return; }
+  if (/Android/i.test(ua)) { const w = window.open(GOOGLE_CAL, "_blank"); if (w) w.opener = null; else window.location.href = GOOGLE_CAL; return; }
+  const a = document.createElement("a"); a.href = ics; a.download = "ahnaf-sulaiha-nikkah.ics";
   document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
 }
