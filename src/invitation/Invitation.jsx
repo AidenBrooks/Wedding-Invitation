@@ -21,16 +21,7 @@ function Invitation({ lang, setLang, opened }) {
   const [revealed, setRevealed] = React.useState(false);
   const [locked, setLocked] = React.useState(true);
   React.useEffect(() => { if (!opened) return; const id = setTimeout(() => setLocked(false), UNLOCK_MS); return () => clearTimeout(id); }, [opened]);
-  /* Scratching the heart also opens the calendar prompt — once, on the finger-lift that finished the reveal
-     (browsers only allow this straight after a tap). A short pause lets the date and sparkles show first. */
-  const calPending = React.useRef(false), calDone = React.useRef(false);
-  const afterScratch = () => {
-    if (!calPending.current || calDone.current) return;
-    calPending.current = false; calDone.current = true;
-    setTimeout(saveTheDate, 900);
-  };
   const onReveal = () => {
-    calPending.current = true;
     try { navigator.vibrate && navigator.vibrate([18, 40, 18]); } catch (e) {}
     const h = heartWrap.current.getBoundingClientRect(), s = scratchSec.current.getBoundingClientRect();
     spark.current && spark.current.burst(h.left - s.left + h.width / 2, h.top - s.top + h.height * 0.42);
@@ -51,7 +42,7 @@ function Invitation({ lang, setLang, opened }) {
           </div>
 
           <Block label="02 Wording" pad="64px 34px 48px" gap={20}>
-            <Reveal root={sc}><div style={{ fontFamily: body, fontWeight: 600, fontSize: ta ? 15 : 18, lineHeight: 1.4, textWrap: "balance" }}>{c.host}</div></Reveal>
+            <Reveal root={sc}><div style={{ fontFamily: body, fontWeight: 700, fontSize: ta ? 17 : 22, lineHeight: 1.35, letterSpacing: ta ? 0 : ".01em", color: "var(--text-ink)", textWrap: "balance" }}>{c.host}</div></Reveal>
             <Reveal root={sc} delay={140}><p style={{ margin: 0, fontFamily: body, fontSize: ta ? 15 : 20, lineHeight: ta ? 1.85 : 1.55, fontStyle: ta ? "normal" : "italic", color: "var(--text-ink)", textWrap: "pretty" }}>{c.invite}</p></Reveal>
             <Reveal root={sc} delay={260}><TinyHeart w={90} /></Reveal>
           </Block>
@@ -70,7 +61,7 @@ function Invitation({ lang, setLang, opened }) {
             </Reveal>
             <Reveal root={sc} delay={60}><GreyHeartRule /></Reveal>
             <Reveal root={sc} delay={120}>
-              <div ref={heartWrap} onPointerUp={afterScratch} onKeyUp={afterScratch} style={{ display: "flex", justifyContent: "center", animation: revealed ? "nkHeartPop 700ms var(--ease-out)" : "none" }}>
+              <div ref={heartWrap} style={{ display: "flex", justifyContent: "center", animation: revealed ? "nkHeartPop 700ms var(--ease-out)" : "none" }}>
                 <ScratchReveal lang={lang} width={286} height={256} foil={SAGE_FOIL} hint={" "} onReveal={onReveal}><HeartDate c={c} ta={ta} shown={revealed} /></ScratchReveal>
               </div>
             </Reveal>
@@ -109,7 +100,9 @@ function Invitation({ lang, setLang, opened }) {
                     <iframe title={c.venue} src={MAPS_EMBED} loading="lazy" referrerPolicy="no-referrer-when-downgrade" style={{ width: "100%", height: "100%", border: 0, display: "block", filter: "sepia(.2) saturate(.85)" }}></iframe>
                   </div>
                 </div>
-                <PillButton lang={lang} variant="outline" icon="map-pin" href={MAPS_URL} target="_blank">{c.maps}</PillButton>
+                <div style={{ borderRadius: 999, boxShadow: "0 8px 20px rgba(70,83,45,.3)", "--action-bg": "linear-gradient(135deg, #6f7a45, #56653a)" }}>
+                  <PillButton lang={lang} icon="map-pin" href={MAPS_URL} target="_blank">{c.maps}</PillButton>
+                </div>
               </div>
             </Reveal>
           </Block>
