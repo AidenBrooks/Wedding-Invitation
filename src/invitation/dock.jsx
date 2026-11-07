@@ -31,12 +31,12 @@ export function FloatingDock({ sc, lang, setLang, opened }) {
   );
   return (
     <>
-      <div role="group" aria-label="Language" style={{ ...shell, left: 14, display: "flex", opacity: opened ? 1 : 0, transform: `translateY(${opened ? 0 : 12}px)`, pointerEvents: opened ? "auto" : "none", transition: `opacity 500ms 300ms, transform 600ms ${EASE} 300ms` }}>
+      {setLang && <div role="group" aria-label="Language" style={{ ...shell, left: 14, display: "flex", opacity: opened ? 1 : 0, transform: `translateY(${opened ? 0 : 12}px)`, pointerEvents: opened ? "auto" : "none", transition: `opacity 500ms 300ms, transform 600ms ${EASE} 300ms` }}>
         <div style={{ position: "relative", display: "flex" }}>
           <span aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, width: 40, height: 40, borderRadius: "50%", background: OLIVE, transform: `translateX(${lang === "ta" ? 40 : 0}px)`, transition: `transform 450ms ${EASE}` }} />
           {langBtn("en", "EN")}{langBtn("ta", "த")}
         </div>
-      </div>
+      </div>}
       <button type="button" aria-label="Back to top" tabIndex={up ? 0 : -1} aria-hidden={!up} onClick={() => sc.current.scrollTo({ top: 0, behavior: "smooth" })}
         style={{ ...btn, ...shell, position: "absolute", right: 14, width: 48, height: 48, padding: 0, color: OLIVE, opacity: up ? 1 : 0, transform: up ? "none" : "translateY(12px) scale(.9)", pointerEvents: up ? "auto" : "none", transition: `opacity 400ms, transform 500ms ${EASE}` }}>
         <svg width="42" height="42" viewBox="0 0 42 42" style={{ position: "absolute", left: 2, top: 2, transform: "rotate(-90deg)" }}>

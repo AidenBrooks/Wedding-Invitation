@@ -152,7 +152,6 @@ export function VideoHome({ c, lang, ta, opened }) {
           <div style={{ ...fade(0, 0), transform: t ? "scale(1)" : "scale(.92)", color: gold, "--text-accent": gold, "--text-ink": gold }}><Bismillah size={18} /></div>
           <Rule on={t} delay={300} />
           <Track on={t} delay={500} style={{ fontFamily: serif, fontSize: 12, fontWeight: 600, letterSpacing: ta ? "0" : "0.28em", textTransform: "uppercase", color: gold }}>{c.title}</Track>
-          <div style={{ ...fade(800, 6), fontFamily: ta ? "var(--font-tamil)" : "var(--font-script)", fontSize: ta ? 15 : 28, lineHeight: 1.2, color: ink, marginTop: 2 }}>{n.tagline}</div>
         </div>
         <div style={{ marginTop: "clamp(10px, 3.5dvh, 40px)", display: "flex", flexDirection: "column", alignItems: "center" }}>
           <Ink on={t} delay={900} style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>{foilName(2500, n.groom)}</Ink>

@@ -119,10 +119,20 @@ function Invitation({ lang, setLang, opened }) {
   );
 }
 
+/* Per-guest language links: ?ta → Tamil only, ?en → English only (switch hidden). No parameter → guest can switch. */
+function linkLang() {
+  try {
+    const q = new URLSearchParams(window.location.search);
+    const v = (q.get("lang") || (q.has("ta") ? "ta" : q.has("en") ? "en" : "")).toLowerCase();
+    return v === "ta" || v === "en" ? v : null;
+  } catch (e) { return null; }
+}
+
 export function InvitationApp() {
-  const [lang, setLangS] = React.useState(() => (store.get("nk-lang") === "ta" ? "ta" : "en"));
+  const [fixed] = React.useState(linkLang);
+  const [lang, setLangS] = React.useState(() => fixed || (store.get("nk-lang") === "ta" ? "ta" : "en"));
   const [opened, setOpened] = React.useState(false);
-  const setLang = (l) => { store.set("nk-lang", l); setLangS(l); };
+  const setLang = fixed ? null : (l) => { store.set("nk-lang", l); setLangS(l); };
   React.useEffect(() => { document.documentElement.lang = lang; }, [lang]);
   return (
     <div className="nk-stage">

@@ -23,8 +23,8 @@ export const COPY = {
 };
 
 export const NAMES = {
-  en: { groom: "Mohamed Ahnaf", groomTitle: "B.Sc(CS)", groomParent: "Son of Peerkalam Mr. P.M. Mujibur Rahman", bride: "Sulaiha Faslin", brideTitle: "Aalima", brideParent: "Daughter of Kenthapodi Mr. K.S. Sheik Fareed", tagline: "We're getting married" },
-  ta: { groom: "முகமது அஹ்னஃப்", groomTitle: "B.Sc.(CS)", groomParent: "பீர்கலம் திரு. P.M. முஜிபுர் ரஹ்மான் அவர்களின் மகன்", bride: "சுலைஹா பாஸ்லின்", brideTitle: "ஆலிமா", brideParent: "கெந்தபொடி திரு. K.S. ஷேக் பரீத் அவர்களின் மகள்", tagline: "நாங்கள் திருமணம் செய்கிறோம்" },
+  en: { groom: "Mohamed Ahnaf", groomTitle: "B.Sc(CS)", groomParent: "Son of Peerkalam Mr. P.M. Mujibur Rahman", bride: "Sulaiha Faslin", brideTitle: "Aalima", brideParent: "Daughter of Kenthapodi Mr. K.S. Sheik Fareed" },
+  ta: { groom: "முகமது அஹ்னஃப்", groomTitle: "B.Sc.(CS)", groomParent: "பீர்கலம் திரு. P.M. முஜிபுர் ரஹ்மான் அவர்களின் மகன்", bride: "சுலைஹா பாஸ்லின்", brideTitle: "ஆலிமா", brideParent: "கெந்தபொடி திரு. K.S. ஷேக் பரீத் அவர்களின் மகள்" },
 };
 
 export const PROGRAM = {
