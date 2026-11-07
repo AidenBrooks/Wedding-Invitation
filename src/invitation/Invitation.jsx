@@ -110,7 +110,7 @@ function Invitation({ lang, setLang, opened }) {
           <Block label="07 Presence" pad="56px 30px 96px" gap={12}>
             <Reveal root={sc}><ScriptTitle ta={ta} size={36}>{c.presence}</ScriptTitle></Reveal>
             <Reveal root={sc} delay={80}><TinyHeart /></Reveal>
-            {PRESENCE.map((p, i) => <Reveal key={p} root={sc} delay={140 + i * 90}><div style={{ fontFamily: "var(--font-serif)", fontSize: 18, lineHeight: 1.35 }}>{p}</div></Reveal>)}
+            {PRESENCE[lang].map((p, i) => <Reveal key={p} root={sc} delay={140 + i * 90}><div lang={lang} style={{ fontFamily: body, fontSize: ta ? 15 : 18, lineHeight: 1.35 }}>{p}</div></Reveal>)}
             <div style={{ fontFamily: body, fontSize: 11, letterSpacing: ta ? 0 : ".12em", color: "var(--text-muted)" }}>{c.credit}</div>
           </Block>
         </div>
@@ -121,6 +121,8 @@ function Invitation({ lang, setLang, opened }) {
 
 /* Per-guest language links: ?ta → Tamil only, ?en → English only (switch hidden). No parameter → guest can switch. */
 function linkLang() {
+  const built = import.meta.env.VITE_LANG;
+  if (built === "ta" || built === "en") return built;
   try {
     const q = new URLSearchParams(window.location.search);
     const v = (q.get("lang") || (q.has("ta") ? "ta" : q.has("en") ? "en" : "")).toLowerCase();

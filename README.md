@@ -23,6 +23,9 @@ npm run build    # → dist/ (static; works at a domain root or any sub-path)
 
 `?lang=ta` / `?lang=en` work too.
 
+## Tamil-only build
+Build with `VITE_LANG=ta` (for example, set it as a Vercel environment variable, or put it in `.env.production`). The site is then Tamil only: no switch, and URL parameters are ignored.
+
 ## Structure
 - `src/styles/`: design-system tokens copied from `project/tokens/`, minus the dusk theme the client removed. `app.css` holds the page shell, the olive section theme and the keyframes.
 - `src/components/`: design-system primitives copied unchanged (Icon, PillButton, ScratchReveal, Bismillah).
