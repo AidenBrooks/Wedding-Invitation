@@ -31,5 +31,4 @@ npm run build    # → dist/ (static; works at a domain root or any sub-path)
 
 ## Open items carried over from the design chats
 - The Tamil wording was written by the design assistant and needs a native reader.
-- The Nikkah time differs: the venue and heart say 11:30 AM, but the program says 11 AM – 12 PM.
 - The printed card names two halls (Haji Habeeb Shadhi Mahal / Sulthar Habeebullah Mahal). This build uses the Venue line.
